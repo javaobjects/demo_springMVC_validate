@@ -335,7 +335,7 @@ public class BookController {
 }
 ```
 
-8. **src** 目录下新建一个 **customerValidattionMessages.properties**
+8. **src** 目录下新建一个 **customerValidationMessages.properties**
 
 ```
 book.bookId.isNull=\u56FE\u4E66\u7F16\u53F7\u4E0D\u80FD\u4E3A\u7A7A
@@ -376,14 +376,26 @@ public class CustomerDateConverter implements Converter<String,Date> {
 	}
 }
 ```
+10. 运行并测试
 
+出现如下报错：
 
+![](64-Images/13.png)
 
+**原因：** 
 
+springmvc-servlet.xml 中的 value 值与配置文件名不一致
 
+![](64-Images/14.png)
 
+**解决：**
 
+```
+将这两名字更改为统一
+```
+**如图所示，测试成功**
 
+![](64-Images/15.png)
 
 
 **以就就是我关于 Java-springMVC服务端数据校验如何实现?  知识点的整理与总结的全部内容 [另附源码链接](https://github.com/javaobjects/demo_springMVC_validate)**
