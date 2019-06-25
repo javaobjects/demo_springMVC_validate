@@ -99,7 +99,7 @@
 ![](64-Images/5.png)
 
 
-5. 新建Jsp页面 **add_order.jsp**
+5. 新建Jsp页面 **add_book.jsp**
 
 ![](64-Images/6.png)
 
@@ -150,6 +150,14 @@ Multiple annotations found at this line:
 ![](64-Images/8.png)
 ![](64-Images/9.png)
 ![](64-Images/10.png)
+
+最后成功解决咯报错，如图所示
+
+![](64-Images/11.png)
+
+
+
+
 
 
 
