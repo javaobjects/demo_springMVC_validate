@@ -162,6 +162,11 @@ Multiple annotations found at this line:
 ```
 package net.ptcs.demo.entity;
 
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Book {
 	/*bookId:非空校验，整数校验，大于0的校验
 	 * bookName:非空校验，不能有非法字符（符合书名的正则表达式规范）
