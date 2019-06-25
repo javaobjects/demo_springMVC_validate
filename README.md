@@ -59,13 +59,13 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="net.ptcs.demo.converter.CustomerDateConverter"></bean>
+				<bean class="net.neuedu.demo.converter.CustomerDateConverter"></bean>
 			</list>
 		</property>
 
 	</bean>
 
-	<context:component-scan base-package="net.ptcs.demo.controller"></context:component-scan>
+	<context:component-scan base-package="net.neuedu.demo.controller"></context:component-scan>
 </beans>
 ```
 
@@ -164,7 +164,11 @@ package net.ptcs.demo.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class Book {
@@ -176,18 +180,35 @@ public class Book {
 	
 	@NotNull(message="{book.bookId.isNull}")
 	private Integer bookId;
-	@NotNull(message="{book.bookName.isNull}")
+	@NotBlank(message="{book.bookName.isNull}")
 	@Size(min=3,max=40,message="{book.bookName.size}")
 	private String bookName;
 	@NotNull(message="{book.intoStoreTime.isNull}")
 	private Date intoStoreTime;
-	@NotNull(message="{book.publishName.isNull}")
+	@NotBlank(message="{book.publishName.isNull}")
 	private String publishName;
-	@NotNull(message="{book.price.isNull}")
+	
+	
+	@Pattern(regexp = "^1(3|4|5|7|8)\\d{9}$",message = "手机号码格式错误")
+	@NotBlank(message = "手机号码不能为空")
+	private String phone;
+	
+	
+	@NotNull(message="{book.price.isNull}")//对于数字校验是否为空使用@NotNull,String类型使用@NotBlank list类型使用@NotEmpty
+	@Digits(fraction = 2, integer = 100, message="{book.price.error}")//对于小数进行校验，限定整数数位integer和小数数位fraction
+	@DecimalMin(value = "0", message="{book.price.value}")//对值进行校验，必须大于等于value的值
 	private Double price;
 
 	public Book() {
 		super();
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Override
@@ -247,6 +268,85 @@ public class Book {
 		this.price = price;
 	}
 }
+```
+7. 在 net.ptcs.demo.controller 内下新建 BookController类
+
+```
+package net.ptcs.demo.controller;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import net.ptcs.demo.entity.Book;
+
+/**
+ * 图书管理模块的控制器，也叫做处理器
+* <p>Title: BookController</p>  
+* <p>Description: </p>  
+* @author xianxian 
+* @date 2019年6月25日
+*/
+
+@Controller
+@RequestMapping("book")
+public class BookController {
+	/**
+	 * use:处理页面添加图书的请求
+	 * 
+	 * 今天我们的需求：
+	 * 1.在处理添加图书请求前对book对象中的属性进行校验：
+	 * bookId:非空校验，整数校验，大于0的校验
+	 * bookName:非空校验，不能有非法字符（符合书名的正则表达式规范）
+	 * intoStoreTime：非空校验
+	 * publishName：非空校验，不能有非法字符（符合出版社名的正则表达式规范）
+	 * price：非空校验，大于0，小数校验
+	 * 
+	 * 2.校验的时机：addBook方法调用之前校验，如果校验通过那么继续，没有通过那么返回页面，提示出错信息
+	 * 
+	 * @param book
+	 * @return
+	 */
+	@RequestMapping("addBook.do")
+	public String addBook(@Validated Book book,BindingResult bindingResult,Model model)
+	{
+		List<ObjectError> errors=bindingResult.getAllErrors();
+		
+		if(errors.size()>0)
+		{
+			//校验失败
+//			把出错信息传给页面
+			model.addAttribute("errors", errors);
+			model.addAttribute("book", book);
+			return "add_book";//   /+add_book+.jsp
+		}else
+		{
+			//校验成功
+			System.out.println("into addBook()方法。。。。。");
+			System.out.println("book:"+book);
+			return "";
+		}
+	}
+}
+```
+
+8. **src** 目录下新建一个 **customerValidattionMessages.properties**
+
+```
+book.bookId.isNull=\u56FE\u4E66\u7F16\u53F7\u4E0D\u80FD\u4E3A\u7A7A
+book.bookName.isNull=\u56FE\u4E66\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+book.intoStoreTime.isNull=\u5165\u5E93\u65F6\u95F4\u4E0D\u80FD\u4E3A\u7A7A
+book.publishName.isNull=\u51FA\u7248\u793E\u540D\u79F0\u4E0D\u80FD\u4E3A\u7A7A
+book.price.isNull=\u4EF7\u683C\u4E0D\u80FD\u4E3A\u7A7A
+book.bookName.size=\u56FE\u4E66\u540D\u79F0\u957F\u5EA6\u6700\u5C0F\u662F3\uFF0C\u6700\u5927\u662F40
+book.price.isNull=\u4E66\u7684\u4EF7\u683C\u4E0D\u80FD\u4E3A\u7A7A
+book.price.error=\u4E66\u7684\u4EF7\u683C\u683C\u5F0F\u9519\u8BEF
+book.price.value=\u4E66\u7684\u4EF7\u683C\u5FC5\u987B\u5927\u4E8E0
 ```
 
 

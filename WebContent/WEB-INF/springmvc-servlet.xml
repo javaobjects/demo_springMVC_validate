@@ -40,11 +40,11 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="net.ptcs.demo.converter.CustomerDateConverter"></bean>
+				<bean class="net.neuedu.demo.converter.CustomerDateConverter"></bean>
 			</list>
 		</property>
 
 	</bean>
 
-	<context:component-scan base-package="net.ptcs.demo.controller"></context:component-scan>
+	<context:component-scan base-package="net.neuedu.demo.controller"></context:component-scan>
 </beans>
