@@ -1,22 +1,3 @@
-# 64-Java-springMVC服务端数据校验如何实现?
-
-1. 新建一个动态web工程 命名 **demo_springMVC_validate**
-
-![](64-Images/1.png)
-
-2. 导入对应的jar包并添加到内路径
-
-![](64-Images/2.png)
-
-![](64-Images/3.png)
-
-3. 导入对应的配置文件
-
-![](64-Images/4.png)
-
-**springmvc-servlet.xml**
-
-```
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -67,52 +48,3 @@
 
 	<context:component-scan base-package="net.ptcs.demo.controller"></context:component-scan>
 </beans>
-```
-
-**web.xml**
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <display-name>demo_springMVC_helloworld</display-name>
-  <servlet>
-    <servlet-name>springmvc</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>springmvc</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-</web-app>
-```
-
-4. 新建包 **net.ptcs.demo.controller**
-
-![](64-Images/5.png)
-
-
-
-
-
-
-
-
-
-
-**以就就是我关于 Java-springMVC服务端数据校验如何实现?  知识点的整理与总结的全部内容 [另附源码链接](https://github.com/javaobjects/demo_springMVC_validate)**
-
-==================================================================
-#### 分割线
-==================================================================
-
-**博主为咯学编程：父母不同意学编程，现已断绝关系;恋人不同意学编程，现已分手;亲戚不同意学编程，现已断绝来往;老板不同意学编程,现已失业三十年。。。。。。如果此博文有帮到你欢迎打赏，金额不限。。。**
-
-![](https://upload-images.jianshu.io/upload_images/5227364-0824589594f944c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) 
