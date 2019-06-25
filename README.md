@@ -134,6 +134,22 @@
 </body>
 </html>
 ```
+此时报错信息如下：
+
+![](64-Images/7.png)
+
+```
+Multiple annotations found at this line:
+	- The superclass "javax.servlet.http.HttpServlet" was not found on the Java 
+	 Build Path
+	- Line breakpoint:add_book.jsp [line: 1]
+```
+**解决方法：**
+项目右键 ----> Configure Build Path -----> Java Build Path ---> Add Library ---> Server RunTime ----> Next ---> Apache Tomcat v8.0 ---> Finish ---> Apply ---> Apply and close 
+
+![](64-Images/8.png)
+![](64-Images/9.png)
+![](64-Images/10.png)
 
 
 

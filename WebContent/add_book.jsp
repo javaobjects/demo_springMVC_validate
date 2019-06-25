@@ -10,7 +10,6 @@
 <body>
 	<form action="<%=request.getContextPath()%>/book/addBook.do"
 		method="post">
-
 		<c:if test="${errors!=null}">
 			<c:forEach items="${errors}" var="e">
 				${e.defaultMessage}<br>
