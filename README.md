@@ -348,7 +348,34 @@ book.price.isNull=\u4E66\u7684\u4EF7\u683C\u4E0D\u80FD\u4E3A\u7A7A
 book.price.error=\u4E66\u7684\u4EF7\u683C\u683C\u5F0F\u9519\u8BEF
 book.price.value=\u4E66\u7684\u4EF7\u683C\u5FC5\u987B\u5927\u4E8E0
 ```
+9. 新建 net.ptcs.demo.converter 包下的 CustomerDateConverter 类
 
+```
+package net.ptcs.demo.converter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.core.convert.converter.Converter;
+
+public class CustomerDateConverter implements Converter<String,Date> {
+	@Override
+	public Date convert(String source) {
+		Date date=null;
+		if(source!=null && !"".equals(source))
+		{
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				date=sdf.parse(source);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		return date;
+	}
+}
+```
 
 
 
